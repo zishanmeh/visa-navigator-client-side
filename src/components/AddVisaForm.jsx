@@ -45,6 +45,16 @@ const AddVisaForm = () => {
       selectedDocuments,
     };
     console.log(newVisa);
+    fetch("http://localhost:3000/addVisa", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+
+      body: JSON.stringify(newVisa),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
   };
 
   return (
