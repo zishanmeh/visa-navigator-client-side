@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from "../provider/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const GoogleSign = () => {
   const { signInWithGoogle, setUser } = useContext(AuthContext);
@@ -10,9 +11,10 @@ const GoogleSign = () => {
     signInWithGoogle()
       .then((result) => {
         setUser(result.user);
-        navigate("/");
+        navigate(location?.state ? location.state : "/");
+        toast.success("Google sign in Successfull");
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => toast.error(err.message));
   };
   return (
     <div className="my-4">

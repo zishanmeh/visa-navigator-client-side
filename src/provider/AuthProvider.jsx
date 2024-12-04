@@ -7,6 +7,8 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.init";
 export const AuthContext = createContext();
@@ -29,6 +31,7 @@ const AuthProvider = ({ children }) => {
   const logOut = () => {
     setLoading(true);
     signOut(auth);
+    toast.success("Log out");
   };
 
   // Sign in user
@@ -63,7 +66,9 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
   return (
-    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={authInfo}>
+      {children} <ToastContainer></ToastContainer>
+    </AuthContext.Provider>
   );
 };
 

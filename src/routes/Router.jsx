@@ -3,6 +3,7 @@ import Root from "../layouts/Root";
 import AddVisa from "../pages/AddVisa";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
+import PrivateRoute from "./PrivateRoutes";
 
 const Router = createBrowserRouter([
   {
@@ -15,7 +16,11 @@ const Router = createBrowserRouter([
       },
       {
         path: "/add-visa",
-        element: <AddVisa></AddVisa>,
+        element: (
+          <PrivateRoute>
+            <AddVisa></AddVisa>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/register",

@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import GoogleSign from "../components/GoogleSign";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const { createNewUser, setUser, updateUserProfile } = useContext(AuthContext);
@@ -37,6 +38,7 @@ const Register = () => {
         updateUserProfile({ displayName: name, photoURL: photo })
           .then((result) => {
             navigate("/");
+            toast.success("User registration Successfull!");
           })
           .catch((err) => setErrorMessage(err.message));
       })
