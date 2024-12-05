@@ -1,13 +1,25 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import { toast } from "react-toastify";
 
-const AddVisaForm = () => {
+const UpdateVisaForm = ({ visa }) => {
   const [selectedVisaType, setSelectedVisaType] = useState("");
   const [selectedDocuments, setSelectedDocuments] = useState([]);
+  const [formData, setFormData] = useState({ visa });
   const { user } = useContext(AuthContext);
   const handleVisaTypeChange = (event) => {
     setSelectedVisaType(event.target.value);
+  };
+  useEffect(() => {
+    setFormData({ ...visa });
+  }, [visa]);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const handleCheckboxChange = (event) => {
@@ -23,9 +35,14 @@ const AddVisaForm = () => {
       }
     });
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(selectedDocuments);
+    if (selectedDocuments.length < 1) {
+      toast.warn("Please select required documents");
+      return;
+    }
+
     const form = e.target;
     const countryImage = form.countryImage.value;
     const countryName = form.countryName.value;
@@ -51,21 +68,8 @@ const AddVisaForm = () => {
       userEmail,
       userName,
     };
-    fetch("http://localhost:3000/addVisa", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-
-      body: JSON.stringify(newVisa),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        toast.success("Added visa info successfully");
-        form.reset();
-      });
+    console.log(newVisa);
   };
-
   return (
     <div className="card bg-base-100 w-full shadow-2xl">
       <form className="card-body text-black" onSubmit={handleSubmit}>
@@ -78,6 +82,8 @@ const AddVisaForm = () => {
             <input
               type="text"
               placeholder="Country Image URL"
+              value={formData.countryImage}
+              onChange={handleInputChange}
               className="input input-bordered"
               name="countryImage"
               required
@@ -92,6 +98,8 @@ const AddVisaForm = () => {
               placeholder="Country name"
               className="input input-bordered"
               name="countryName"
+              value={formData.countryName}
+              onChange={handleInputChange}
               required
             />
           </div>
@@ -105,7 +113,7 @@ const AddVisaForm = () => {
             </label>
             <select
               className="select select-bordered w-full max-w-xs text-black"
-              value={selectedVisaType}
+              value={formData.selectedVisaType}
               onChange={handleVisaTypeChange}
             >
               <option value="" disabled>
@@ -126,6 +134,8 @@ const AddVisaForm = () => {
               placeholder="Processing Time"
               className="input input-bordered"
               name="processingTime"
+              value={formData.processingTime}
+              onChange={handleInputChange}
               required
             />
           </div>
@@ -133,9 +143,20 @@ const AddVisaForm = () => {
 
         {/* Here is column 3 */}
         <div>
-          <div className="form-control">
+          <div className="form-control" required>
+            {selectedDocuments.length < 1 && (
+              <p className="text-sm text-red-500">*Update required</p>
+            )}
             <label className="label">
-              <span className="label-text">Required Documents</span>
+              <span
+                className={`label-text ${
+                  selectedDocuments.length < 1
+                    ? "text-red-500"
+                    : "text-gray-700"
+                }`}
+              >
+                Required Documents
+              </span>
             </label>
             <label className="label cursor-pointer justify-start gap-3">
               <input
@@ -187,6 +208,8 @@ const AddVisaForm = () => {
             name="description"
             placeholder="Description"
             className="input input-bordered"
+            value={formData.description}
+            onChange={handleInputChange}
             required
           ></textarea>
         </div>
@@ -202,6 +225,8 @@ const AddVisaForm = () => {
               placeholder="Age_restriction"
               className="input input-bordered"
               name="ageRestriction"
+              value={formData.ageRestriction}
+              onChange={handleInputChange}
               required
             />
           </div>
@@ -214,6 +239,8 @@ const AddVisaForm = () => {
               placeholder="Visa Fee"
               className="input input-bordered"
               name="visaFee"
+              value={formData.visaFee}
+              onChange={handleInputChange}
               required
             />
           </div>
@@ -230,6 +257,8 @@ const AddVisaForm = () => {
               placeholder="Validity"
               className="input input-bordered"
               name="validity"
+              value={formData.validity}
+              onChange={handleInputChange}
               required
             />
           </div>
@@ -243,6 +272,8 @@ const AddVisaForm = () => {
               className="input input-bordered"
               name="applicationMethod"
               required
+              value={formData.applicationMethod}
+              onChange={handleInputChange}
             />
           </div>
         </div>
@@ -256,4 +287,4 @@ const AddVisaForm = () => {
   );
 };
 
-export default AddVisaForm;
+export default UpdateVisaForm;
