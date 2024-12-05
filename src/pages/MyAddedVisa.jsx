@@ -7,6 +7,14 @@ import { ToastContainer } from "react-toastify";
 const MyAddedVisa = () => {
   const visas = useLoaderData();
   const [selectedVisa, setSelectedVisa] = useState(null);
+  const handleDelete = (id) => {
+    console.log("clicked");
+    fetch(`http://localhost:3000/delete/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  };
   if (visas.length < 1) {
     return (
       <div className="flex justify-center items-center">
@@ -46,7 +54,12 @@ const MyAddedVisa = () => {
               >
                 Update
               </button>
-              <button className="btn btn-warning btn-outline">Delete</button>
+              <button
+                className="btn btn-warning btn-outline"
+                onClick={() => handleDelete(visa._id)}
+              >
+                Delete
+              </button>
             </div>
             {/* Open the modal using document.getElementById('ID').showModal() method */}
             <dialog
@@ -62,7 +75,9 @@ const MyAddedVisa = () => {
                 <div className="modal-action">
                   <form method="dialog">
                     {/* if there is a button in form, it will close the modal */}
-                    <button className="btn">Close</button>
+                    <button className="btn" id="updateModalClose">
+                      Close
+                    </button>
                   </form>
                 </div>
               </div>

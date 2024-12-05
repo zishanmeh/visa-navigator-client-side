@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const UpdateVisaForm = ({ visa }) => {
   const [selectedVisaType, setSelectedVisaType] = useState("");
   const [selectedDocuments, setSelectedDocuments] = useState([]);
   const [formData, setFormData] = useState({ visa });
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleVisaTypeChange = (event) => {
     setSelectedVisaType(event.target.value);
   };
@@ -77,7 +79,11 @@ const UpdateVisaForm = ({ visa }) => {
       body: JSON.stringify(newVisa),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        navigate(`/my-visa/${user.email}`);
+        toast.success("Successfully Updated data");
+        document.getElementById("updateModalClose").click();
+      });
   };
   return (
     <div className="card bg-base-100 w-full shadow-2xl">
