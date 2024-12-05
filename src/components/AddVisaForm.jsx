@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../provider/AuthProvider";
+import { toast } from "react-toastify";
 
 const AddVisaForm = () => {
   const [selectedVisaType, setSelectedVisaType] = useState("");
   const [selectedDocuments, setSelectedDocuments] = useState([]);
+  const { user } = useContext(AuthContext);
   const handleVisaTypeChange = (event) => {
     setSelectedVisaType(event.target.value);
   };
@@ -32,6 +35,8 @@ const AddVisaForm = () => {
     const visaFee = form.visaFee.value;
     const validity = form.validity.value;
     const applicationMethod = form.applicationMethod.value;
+    const userEmail = user.email;
+    const userName = user.displayName;
     const newVisa = {
       countryImage,
       countryName,
@@ -43,6 +48,8 @@ const AddVisaForm = () => {
       applicationMethod,
       selectedVisaType,
       selectedDocuments,
+      userEmail,
+      userName,
     };
     console.log(newVisa);
     fetch("http://localhost:3000/addVisa", {
@@ -54,7 +61,10 @@ const AddVisaForm = () => {
       body: JSON.stringify(newVisa),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        toast.success("Added visa info successfully");
+        form.reset();
+      });
   };
 
   return (
