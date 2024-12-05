@@ -68,7 +68,16 @@ const UpdateVisaForm = ({ visa }) => {
       userEmail,
       userName,
     };
-    console.log(newVisa);
+    console.log(visa._id);
+    fetch(`http://localhost:3000/updateVisa/${visa._id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newVisa),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
   };
   return (
     <div className="card bg-base-100 w-full shadow-2xl">
