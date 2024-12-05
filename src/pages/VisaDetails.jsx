@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const VisaDetails = () => {
   const visa = useLoaderData();
@@ -17,7 +18,46 @@ const VisaDetails = () => {
     selectedVisaType,
     selectedDocuments,
   } = visa;
-  console.log(selectedDocuments);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = user.email;
+    const firstName = form.firstName.value;
+    const lastName = form.lastName.value;
+    const appliedDate = form.appliedDate.value;
+    const applicationFee = form.applicationFee.value;
+    const newAppliedVisa = {
+      email,
+      firstName,
+      lastName,
+      appliedDate,
+      applicationFee,
+      countryImage,
+      countryName,
+      applicationMethod,
+      processingTime,
+      selectedVisaType,
+      validity,
+    };
+    console.log(newAppliedVisa);
+
+    fetch("http://localhost:3000/applyVisa", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newAppliedVisa),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        document.getElementById("closeModal").click();
+        Swal.fire({
+          title: "Well Done!",
+          text: `You applied for ${countryName} visa.`,
+          icon: "success",
+        });
+      });
+  };
   return (
     <div className="hero bg-base-200 min-h-screen text-gray-700">
       <div className="hero-content flex-col lg:flex-row">
@@ -55,7 +95,7 @@ const VisaDetails = () => {
           </div>
           <button
             className="btn btn-neutral mt-4"
-            onClick={() => document.getElementById("my_modal_5").showModal()}
+            onClick={() => document.getElementById("my_modal_3").showModal()}
           >
             Apply for the visa!
           </button>
@@ -63,12 +103,21 @@ const VisaDetails = () => {
           {/* Open the modal using document.getElementById('ID').showModal() method */}
 
           <dialog
-            id="my_modal_5"
+            id="my_modal_3"
             className="modal modal-bottom sm:modal-middle"
           >
             <div className="modal-box">
+              <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button
+                  id="closeModal"
+                  className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-red-600"
+                >
+                  ✕
+                </button>
+              </form>
               <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                <form className="card-body">
+                <form className="card-body" onSubmit={handleSubmit}>
                   <div className="form-control">
                     <label className="label">
                       <span className="label-text">Email</span>
@@ -148,12 +197,7 @@ const VisaDetails = () => {
                   </div>
                 </form>
               </div>
-              <div className="modal-action">
-                <form method="dialog">
-                  {/* if there is a button in form, it will close the modal */}
-                  <button className="btn">Close</button>
-                </form>
-              </div>
+              <div className="modal-action"></div>
             </div>
           </dialog>
           {/* Modal End */}

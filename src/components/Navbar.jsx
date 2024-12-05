@@ -16,7 +16,7 @@ const Navbar = () => {
         <NavLink to={"/add-visa"}>Add visa</NavLink>
       </li>
       <li className="mr-2">
-        <NavLink to={"/my-added-visa"}>My added visas</NavLink>
+        <NavLink to={`/my-visa/${user?.email}`}>My added visas</NavLink>
       </li>
       <li className="mr-2">
         <NavLink to={"/my-visa-application"}>My Visa applications</NavLink>
