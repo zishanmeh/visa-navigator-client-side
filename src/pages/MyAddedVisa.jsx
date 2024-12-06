@@ -1,19 +1,41 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import UpdateVisaForm from "../components/UpdateVisaForm";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Loading from "./Loading";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import { AuthContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const MyAddedVisa = () => {
   const visas = useLoaderData();
   const [selectedVisa, setSelectedVisa] = useState(null);
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
   const handleDelete = (id) => {
-    console.log("clicked");
-    fetch(`http://localhost:3000/delete/${id}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+        fetch(`http://localhost:3000/delete/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            navigate(`/my-visa/${user.email}`);
+          });
+      }
+    });
   };
   if (visas.length < 1) {
     return (

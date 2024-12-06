@@ -7,6 +7,7 @@ import PrivateRoute from "./PrivateRoutes";
 import AllVisa from "../pages/AllVisa";
 import VisaDetails from "../pages/VisaDetails";
 import MyAddedVisa from "../pages/MyAddedVisa";
+import MyVisaApplication from "../pages/MyVisaApplication";
 
 const Router = createBrowserRouter([
   {
@@ -51,6 +52,16 @@ const Router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyAddedVisa></MyAddedVisa>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: `visa/application/:email`,
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/application/${params.email}`),
+        element: (
+          <PrivateRoute>
+            <MyVisaApplication></MyVisaApplication>
           </PrivateRoute>
         ),
       },
