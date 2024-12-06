@@ -9,6 +9,7 @@ import VisaDetails from "../pages/VisaDetails";
 import MyAddedVisa from "../pages/MyAddedVisa";
 import MyVisaApplication from "../pages/MyVisaApplication";
 import ErrorPage from "../pages/ErrorPage";
+import Home from "../pages/Home";
 
 const Router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const Router = createBrowserRouter([
     element: <Root></Root>,
     errorElement: <ErrorPage></ErrorPage>,
     children: [
+      {
+        path: "/",
+        element: <Home></Home>,
+      },
       {
         path: "/add-visa",
         element: (
