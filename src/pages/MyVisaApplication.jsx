@@ -1,7 +1,38 @@
-import { useLoaderData } from "react-router-dom";
+import { useContext } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { AuthContext } from "../provider/AuthProvider";
 
 const MyVisaApplication = () => {
   const visas = useLoaderData();
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const handleCancel = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to trac anymore!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your application file has been deleted.",
+          icon: "success",
+        });
+        fetch(`http://localhost:3000/application/delete/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            navigate(`/visa/application/${user.email}`);
+          });
+      }
+    });
+  };
   if (visas.length < 1) {
     return <h1 className="text-center text-4xl font-bold">No Data Found</h1>;
   }
@@ -39,7 +70,12 @@ const MyVisaApplication = () => {
                 <li>{visa.processingTime} week's to process.</li>
               </ul>
             </div>
-            <button className="btn btn-sm btn-warning mt-3">Cancel</button>
+            <button
+              className="btn btn-sm btn-warning mt-3"
+              onClick={() => handleCancel(visa._id)}
+            >
+              Cancel
+            </button>
           </div>
         ))}
       </div>

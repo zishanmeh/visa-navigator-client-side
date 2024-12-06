@@ -56,7 +56,7 @@ const Router = createBrowserRouter([
         ),
       },
       {
-        path: `visa/application/:email`,
+        path: "visa/application/:email",
         loader: ({ params }) =>
           fetch(`http://localhost:3000/application/${params.email}`),
         element: (
