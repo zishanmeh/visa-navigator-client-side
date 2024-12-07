@@ -142,10 +142,13 @@ const UpdateVisaForm = ({ visa }) => {
           </div>
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Processing Time</span>
+              <span className="label-text">
+                Processing Time{" "}
+                <span className="text-sm text-gray-400">(only in week)</span>
+              </span>
             </label>
             <input
-              type="text"
+              type="number"
               placeholder="Processing Time"
               className="input input-bordered"
               name="processingTime"
@@ -265,10 +268,13 @@ const UpdateVisaForm = ({ visa }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 justify-between items-start">
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Validity</span>
+              <span className="label-text">
+                Validity{" "}
+                <span className="text-sm text-gray-400">(only in month)</span>
+              </span>
             </label>
             <input
-              type="text"
+              type="number"
               placeholder="Validity"
               className="input input-bordered"
               name="validity"
