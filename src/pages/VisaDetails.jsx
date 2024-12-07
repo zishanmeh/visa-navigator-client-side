@@ -1,11 +1,12 @@
 import { useContext } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
 
 const VisaDetails = () => {
   const visa = useLoaderData();
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     countryImage,
     countryName,
@@ -59,7 +60,15 @@ const VisaDetails = () => {
       });
   };
   return (
-    <div className="hero bg-base-200 min-h-screen text-gray-700">
+    <div className="hero bg-base-200 min-h-screen text-gray-700 relative">
+      <button
+        className="btn btn-neutral btn-sm absolute top-3 left-3 z-50"
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        Back
+      </button>
       <div className="hero-content flex-col lg:flex-row">
         <img src={countryImage} className="max-w-sm rounded-lg shadow-2xl" />
         <div>
