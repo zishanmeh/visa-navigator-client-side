@@ -1,6 +1,6 @@
-import img1 from "../assets/visa.jpg";
-import img2 from "../assets/travel.webp";
-import img3 from "../assets/usVisa.png";
+import img1 from "../assets/one.png";
+import img2 from "../assets/two.png";
+import img3 from "../assets/three.png";
 const Banner = () => {
   return (
     <div className="carousel w-full">

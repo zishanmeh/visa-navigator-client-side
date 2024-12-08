@@ -18,14 +18,13 @@ const Register = () => {
     console.log(name, email, photo, password);
 
     // Password Regex
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
     // Function to validate password
     // const validatePassword = (password) => passwordRegex.test(password);
     if (!passwordRegex.test(password)) {
       setErrorMessage(
-        "Password must contain at least 8 characters, one Upper case, one lower case and one special character"
+        "Password must contain at least 6 characters, one Upper case and one lower case character"
       );
       return;
     }

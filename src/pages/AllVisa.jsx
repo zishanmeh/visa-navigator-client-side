@@ -19,16 +19,17 @@ const AllVisa = () => {
           </ul>
         </details>
       </div>
-      <div className="grid grid-cols-1 mt-8 md:grid-cols-3 lg:grid-cols-4 justify-between items-center gap-4">
+      <div className="grid grid-cols-1 mt-8 md:grid-cols-3 lg:grid-cols-4 justify-between items-start gap-4">
         {allVisas.map((visa) => (
           <div
             className="card card-compact bg-base-100 shadow-xl text-gray-700"
             key={visa._id}
           >
-            <figure>
+            <figure className="h-36">
               <img
                 src={visa.countryImage}
                 alt={`Flag of ${visa.countryName} country`}
+                className="h-full w-full object-cover"
               />
             </figure>
             <div className="card-body">

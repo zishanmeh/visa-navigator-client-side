@@ -1,12 +1,13 @@
 import { useContext } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from "../provider/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const GoogleSign = () => {
   const { signInWithGoogle, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
   const userGoogleSignIn = () => {
     signInWithGoogle()
       .then((result) => {

@@ -25,10 +25,11 @@ const LatestVisa = () => {
                 className="card card-compact bg-base-100 shadow-xl text-gray-700"
                 key={visa._id}
               >
-                <figure>
+                <figure className="h-36">
                   <img
                     src={visa.countryImage}
                     alt={`Flag of ${visa.countryName} country`}
+                    className="h-full w-full object-cover"
                   />
                 </figure>
                 <div className="card-body">
