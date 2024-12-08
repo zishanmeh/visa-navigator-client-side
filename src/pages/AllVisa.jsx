@@ -5,19 +5,7 @@ const AllVisa = () => {
   return (
     <div>
       <div className="flex justify-center mb-5">
-        <details className="dropdown">
-          <summary className="btn btn-outline text-xl text-white">
-            All Visa
-          </summary>
-          <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] text-gray-700 w-52 p-2 shadow">
-            <li>
-              <Link>Student Visa</Link>
-            </li>
-            <li>
-              <Link>Business Visa</Link>
-            </li>
-          </ul>
-        </details>
+        <h1 className="text-center text-4xl font-bold mb-16">All Visa</h1>
       </div>
       <div className="grid grid-cols-1 mt-8 md:grid-cols-3 lg:grid-cols-4 justify-between items-start gap-4">
         {allVisas.map((visa) => (
