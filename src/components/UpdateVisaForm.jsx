@@ -71,7 +71,7 @@ const UpdateVisaForm = ({ visa }) => {
       userName,
     };
     console.log(visa._id);
-    fetch(`http://localhost:3000/updateVisa/${visa._id}`, {
+    fetch(`https://visa-navigator-nine.vercel.app/updateVisa/${visa._id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

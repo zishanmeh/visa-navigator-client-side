@@ -23,9 +23,12 @@ const MyVisaApplication = () => {
           text: "Your application file has been deleted.",
           icon: "success",
         });
-        fetch(`http://localhost:3000/application/delete/${id}`, {
-          method: "DELETE",
-        })
+        fetch(
+          `https://visa-navigator-nine.vercel.app/application/delete/${id}`,
+          {
+            method: "DELETE",
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             navigate(`/visa/application/${user.email}`);

@@ -51,7 +51,7 @@ const AddVisaForm = () => {
       userEmail,
       userName,
     };
-    fetch("http://localhost:3000/addVisa", {
+    fetch("https://visa-navigator-nine.vercel.app/addVisa", {
       method: "POST",
       headers: {
         "content-type": "application/json",

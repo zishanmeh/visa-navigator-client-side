@@ -42,7 +42,7 @@ const VisaDetails = () => {
     };
     console.log(newAppliedVisa);
 
-    fetch("http://localhost:3000/applyVisa", {
+    fetch("https://visa-navigator-nine.vercel.app/applyVisa", {
       method: "POST",
       headers: {
         "content-type": "application/json",

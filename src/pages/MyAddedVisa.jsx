@@ -27,7 +27,7 @@ const MyAddedVisa = () => {
           text: "Your file has been deleted.",
           icon: "success",
         });
-        fetch(`http://localhost:3000/delete/${id}`, {
+        fetch(`https://visa-navigator-nine.vercel.app/delete/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
